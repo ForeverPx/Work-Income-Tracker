@@ -11,7 +11,7 @@
 [![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-0D96F6)](https://developer.apple.com/xcode/swiftui/)
 [![Local First](https://img.shields.io/badge/data-local--first-34C759)](#隐私与数据)
 
-[功能特性](#功能特性) · [快速开始](#快速开始) · [使用说明](#使用说明) · [开发指南](#开发指南) · [路线图](#路线图)
+[界面预览](#界面预览) · [功能特性](#功能特性) · [快速开始](#快速开始) · [使用说明](#使用说明) · [开发指南](#开发指南) · [路线图](#路线图)
 
 </div>
 
@@ -24,6 +24,22 @@
 Work Income Tracker 将当天的工作状态、实时收入、下班倒计时和额外工作时间集中展示在一个低干扰浮窗中，让每一秒工作的价值都清晰可见。
 
 它不会监控键盘、鼠标或工作内容，也不需要账号和网络服务。所有设置和工作记录都保存在你的 Mac 上。
+
+## 界面预览
+
+<div align="center">
+
+<img src="docs/images/dashboard.png" alt="工作中的秒薪浮窗，展示实时收入、下班倒计时和工作时长" width="340">
+
+**实时工作浮窗**
+
+<br>
+
+<img src="docs/images/settings.png" alt="秒薪、工作时间和下班后计薪规则设置页面" width="700">
+
+**计薪规则设置**
+
+</div>
 
 ## 功能特性
 

@@ -119,6 +119,8 @@ struct SettingsView: View {
         }
         .padding(24)
         .frame(width: 460)
+        .background(Color(nsColor: .windowBackgroundColor))
+        .preferredColorScheme(.dark)
     }
 
     private func close() {
