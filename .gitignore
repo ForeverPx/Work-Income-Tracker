@@ -1,6 +1,12 @@
 .DS_Store
 .build/
+build/
+dist/
 DerivedData/
 xcuserdata/
 *.xcuserstate
 *.profraw
+windows/node_modules/
+windows/out/
+windows/out-test/
+windows/dist/
