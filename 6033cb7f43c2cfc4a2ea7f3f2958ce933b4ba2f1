@@ -1,0 +1,46 @@
+scripts/build-macos.sh
+  fd528823e8d35d8e 1-123
+.gitignore
+  fd528823e8d35d8e 3
+  2f75c13c20591897 4
+README.md
+  fd528823e8d35d8e 152,213-220
+WorkPrice.xcodeproj/project.pbxproj
+  fd528823e8d35d8e 374-376,390,400-402,416,427-429,438,449-451,460
+.github/workflows/macos-release.yml
+  fd528823e8d35d8e 1-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.8.1",
+  "base_commit_sha": "6033cb7f43c2cfc4a2ea7f3f2958ce933b4ba2f1",
+  "prompts": {
+    "2f75c13c20591897": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "d94ab729-db7d-4039-95b7-02f032565f38",
+        "model": "grok-4.6"
+      },
+      "human_author": "panxiao <panxiao@cvte.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 0,
+      "accepted_lines": 1,
+      "overriden_lines": 0,
+      "messages_url": "https://gitai.gz.cvte.cn/cas/5423749772c2c74701dd7ec235ab78c52026499ce6f61f92f7b66b2ff1e75db2"
+    },
+    "fd528823e8d35d8e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "",
+        "model": "unknown"
+      },
+      "human_author": "panxiao <panxiao@cvte.com>",
+      "messages": [],
+      "total_additions": 273,
+      "total_deletions": 64,
+      "accepted_lines": 218,
+      "overriden_lines": 0
+    }
+  }
+}
