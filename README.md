@@ -149,7 +149,7 @@ npm run dist:win
 4. 从浮窗右上角进入设置并填写秒薪和工作时间。
 5. 点击“开始工作”。
 
-> 当前项目尚未进行 Developer ID 签名和公证。若 macOS 阻止首次启动，请在“系统设置 → 隐私与安全性”中确认打开。
+> 安装包使用 ad-hoc 签名，没有 Developer ID，也未公证。若 macOS 阻止首次启动，请右键点击应用并选择“打开”，或在“系统设置 → 隐私与安全性”中允许。
 
 ### 从源码运行
 
@@ -209,6 +209,14 @@ xcodebuild \
   -destination 'platform=macOS,arch=arm64' \
   build CODE_SIGNING_ALLOWED=NO
 ```
+
+### 打包 macOS 安装镜像
+
+```bash
+./scripts/build-macos.sh
+```
+
+脚本会构建 universal Release（arm64 + x86_64），只做 ad-hoc 签名（`codesign -s -`），不会使用钥匙串里的 Developer ID 证书，并生成 `dist/WorkPrice-1.0.0.dmg`。把 `WorkPrice.app` 拖进“应用程序”即可安装。首次打开请右键选择“打开”，或到“系统设置 → 隐私与安全性”中允许。
 
 ### 运行测试
 
