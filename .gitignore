@@ -4,3 +4,7 @@ DerivedData/
 xcuserdata/
 *.xcuserstate
 *.profraw
+windows/node_modules/
+windows/out/
+windows/out-test/
+windows/dist/

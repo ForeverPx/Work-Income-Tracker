@@ -4,11 +4,13 @@
 
 ### 把工作时间，变成看得见的收入
 
-一款轻量、原生、注重隐私的 macOS 秒薪浮窗应用。
+一款轻量、注重隐私的秒薪浮窗应用，包含原生 macOS 版本和 Windows 桌面版本。
 
 [![macOS](https://img.shields.io/badge/macOS-14.0%2B-000000?logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Windows](https://img.shields.io/badge/Windows-10%2B-0078D4?logo=windows&logoColor=white)](#windows-版本)
 [![Swift](https://img.shields.io/badge/Swift-5.10-F05138?logo=swift&logoColor=white)](https://www.swift.org/)
 [![SwiftUI](https://img.shields.io/badge/UI-SwiftUI-0D96F6)](https://developer.apple.com/xcode/swiftui/)
+[![Electron](https://img.shields.io/badge/Windows-Electron-47848F?logo=electron&logoColor=white)](windows/README.md)
 [![Local First](https://img.shields.io/badge/data-local--first-34C759)](#隐私与数据)
 
 [界面预览](#界面预览) · [功能特性](#功能特性) · [快速开始](#快速开始) · [使用说明](#使用说明) · [开发指南](#开发指南) · [路线图](#路线图)
@@ -23,7 +25,7 @@
 
 Work Income Tracker 将当天的工作状态、实时收入、下班倒计时和额外工作时间集中展示在一个低干扰浮窗中，让每一秒工作的价值都清晰可见。
 
-它不会监控键盘、鼠标或工作内容，也不需要账号和网络服务。所有设置和工作记录都保存在你的 Mac 上。
+它不会监控键盘、鼠标或工作内容，也不需要账号和网络服务。所有设置和工作记录都保存在本机。
 
 ## 界面预览
 
@@ -103,9 +105,39 @@ Work Income Tracker 将当天的工作状态、实时收入、下班倒计时和
 
 ## 系统要求
 
+macOS 版本：
+
 - macOS 14.0 Sonoma 或更高版本
 - Apple Silicon 或 Intel Mac
 - Xcode 15.4 或更高版本（仅开发时需要）
+
+Windows 版本：
+
+- Windows 10 或 Windows 11，64 位
+- 开发与打包需要 Node.js 20 或更高版本
+- 在 Linux 上交叉制作安装包时需要 NSIS 编译器（`sudo apt-get install nsis`）
+
+## Windows 版本
+
+Windows 客户端在 [`windows/`](windows/README.md)，用 Electron 与 TypeScript 实现，并复用同一套计薪、班次和恢复规则。它提供右下角置顶浮窗、托盘菜单和本机 JSON 存储，不上传数据。
+
+安装：
+
+1. 获取 `windows/dist/WorkPrice-Setup-1.0.0.exe`，或按下面的命令自己打包。
+2. 运行安装程序，按提示安装。
+3. 从开始菜单或桌面快捷方式「秒薪浮窗」启动。
+4. 在浮窗右上角打开设置，填写秒薪和工作时间，然后点击「开始工作」。
+
+从源码打包：
+
+```bash
+cd windows
+npm install
+npm test
+npm run dist:win
+```
+
+安装包输出为 `windows/dist/WorkPrice-Setup-1.0.0.exe`。更完整的说明见 [windows/README.md](windows/README.md)。
 
 ## 快速开始
 
@@ -199,13 +231,25 @@ xcodebuild \
 - 工作中修改秒薪
 - 输入校验及金额计算
 
+Windows 客户端把同一组场景放在 `windows/tests`，在 `windows/` 目录执行 `npm test`。
+
 ## 技术栈
+
+macOS：
 
 - **Swift 5.10**：应用开发语言
 - **SwiftUI**：浮窗、设置页和菜单栏界面
 - **AppKit / NSPanel**：原生置顶浮窗与多屏幕管理
 - **SwiftData**：本地设置和工作记录持久化
 - **XCTest**：领域逻辑与状态管理测试
+
+Windows：
+
+- **Electron + TypeScript**：置顶浮窗、托盘和设置窗口
+- **decimal.js**：金额按十进制计算到完整精度，界面显示两位小数
+- **Luxon**：本地时区、跨午夜和夏令时班次
+- **本机 JSON**：设置与工作记录，路径为 `%APPDATA%\WorkPrice\`
+- **electron-builder / NSIS**：Windows 安装包
 
 ## 项目结构
 
@@ -229,6 +273,10 @@ xcodebuild \
 │   └── WorkPriceApp.swift
 ├── Tests
 │   └── WorkPriceTests
+├── windows
+│   ├── src
+│   ├── tests
+│   └── electron-builder.yml
 └── docs
     └── PRD.md
 ```
@@ -261,6 +309,7 @@ Work Income Tracker 不会收集或上传：
 - [x] 跨午夜班次
 - [x] 本地持久化和重启恢复
 - [x] 菜单栏与置顶浮窗
+- [x] Windows 置顶浮窗、托盘和 NSIS 安装包
 - [ ] 历史日报和周报
 - [ ] CSV 数据导出
 - [ ] 按星期配置工作时间
