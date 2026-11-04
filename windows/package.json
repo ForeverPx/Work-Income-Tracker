@@ -1,0 +1,34 @@
+{
+  "name": "workprice-windows",
+  "productName": "WorkPrice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "秒薪浮窗 Windows 客户端。本地计薪，无账号、无遥测。",
+  "author": "ForeverPx",
+  "license": "UNLICENSED",
+  "main": "out/main.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "icons": "node scripts/generate-icons.js",
+    "compile": "node scripts/compile.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test out-test/tests/*.test.js",
+    "start": "npm run compile && electron .",
+    "smoke": "npm run compile && node scripts/smoke.js",
+    "dist:win": "node scripts/dist-win.js"
+  },
+  "dependencies": {
+    "decimal.js": "^10.6.0",
+    "luxon": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.6",
+    "@types/node": "^26.6.5",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.28.2",
+    "typescript": "5.9"
+  }
+}

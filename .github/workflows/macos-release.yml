@@ -1,0 +1,65 @@
+name: macOS release asset
+
+on:
+  push:
+    branches: [windows]
+    paths:
+      - scripts/build-macos.sh
+      - .github/workflows/macos-release.yml
+      - WorkPrice/**
+      - WorkPrice.xcodeproj/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ad-hoc DMG
+        run: ./scripts/build-macos.sh
+
+      - name: Verify ad-hoc signature before upload
+        run: |
+          set -euo pipefail
+          DMG="dist/WorkPrice-1.0.0.dmg"
+          ATTACH_OUT="$(hdiutil attach -readonly -noverify -noautoopen "$DMG")"
+          MOUNT="$(printf '%s\n' "$ATTACH_OUT" | awk '/\/Volumes\// {print substr($0, index($0, "/Volumes/"))}' | tail -1)"
+          cleanup() { hdiutil detach "$MOUNT" >/dev/null 2>&1 || true; }
+          trap cleanup EXIT
+          INFO="$(codesign -dv --verbose=4 "$MOUNT/WorkPrice.app" 2>&1 || true)"
+          printf '%s\n' "$INFO"
+          printf '%s\n' "$INFO" | grep -q 'Signature=adhoc'
+          if printf '%s\n' "$INFO" | grep -q '^Authority='; then
+            echo "Refusing to upload an app that has a signing authority." >&2
+            exit 1
+          fi
+          lipo -info "$MOUNT/WorkPrice.app/Contents/MacOS/WorkPrice"
+
+      - name: Upload DMG without removing the Windows installer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            'Windows and macOS builds of the WorkPrice floating income dashboard. The app stays local: no account and no telemetry.' \
+            '' \
+            'Windows' \
+            '- Download WorkPrice-Setup-1.0.0.exe and run it on 64-bit Windows 10 or 11.' \
+            '' \
+            'macOS' \
+            '- Download WorkPrice-1.0.0.dmg (universal, macOS 14 or later).' \
+            '- Open the disk image and drag WorkPrice into Applications.' \
+            '- The app is ad-hoc signed and is not notarized. On first launch, right-click WorkPrice and choose Open, or allow it in System Settings → Privacy & Security.' \
+            '' \
+            'This tag points at the windows branch.' \
+            > release-notes.md
+          gh release upload windows-v1.0.0 dist/WorkPrice-1.0.0.dmg --clobber
+          gh release edit windows-v1.0.0 --notes-file release-notes.md
+          echo "Release assets:"
+          gh release view windows-v1.0.0 --json assets --jq '.assets[].name'
+          gh release view windows-v1.0.0 --json assets --jq '.assets[].name' | grep -qx 'WorkPrice-Setup-1.0.0.exe'
+          gh release view windows-v1.0.0 --json assets --jq '.assets[].name' | grep -qx 'WorkPrice-1.0.0.dmg'

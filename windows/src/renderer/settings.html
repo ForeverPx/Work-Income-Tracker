@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:;"
+    />
+    <title>秒薪设置</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body class="settings-body">
+    <main class="settings">
+      <header class="settings-header">
+        <h1>秒薪设置</h1>
+        <p>配置仅保存在本机；保存后从当前时刻按新规则计费。</p>
+      </header>
+
+      <section class="form-card">
+        <div class="form-row">
+          <label for="rate">秒薪</label>
+          <div class="rate-field">
+            <span aria-hidden="true">¥</span>
+            <input
+              id="rate"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="0.0367"
+              aria-label="秒薪数值"
+            />
+            <span class="unit">/ 秒</span>
+          </div>
+        </div>
+        <div id="hourly" class="form-row" hidden>
+          <span>折合时薪</span>
+          <span id="hourly-value" class="muted digits"></span>
+        </div>
+        <div class="form-row">
+          <label for="start">上班时间</label>
+          <input id="start" type="time" step="60" aria-label="上班时间" />
+        </div>
+        <div class="form-row">
+          <label for="end">下班时间</label>
+          <input id="end" type="time" step="60" aria-label="下班时间" />
+        </div>
+        <div class="form-row">
+          <label for="pays">下班后继续计薪</label>
+          <input id="pays" class="switch" type="checkbox" role="switch" />
+        </div>
+      </section>
+
+      <p id="hint" class="hint"></p>
+      <p id="warning" class="banner warning" hidden></p>
+      <p id="error" class="banner error" hidden role="alert"></p>
+
+      <footer class="settings-actions">
+        <button id="cancel" type="button">取消</button>
+        <button id="save" class="primary" type="button">保存</button>
+      </footer>
+    </main>
+    <script src="./settings.js"></script>
+  </body>
+</html>

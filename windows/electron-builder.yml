@@ -1,0 +1,40 @@
+appId: com.foreverpx.workprice
+productName: WorkPrice
+executableName: WorkPrice
+copyright: Copyright © 2026 ForeverPx
+asar: true
+npmRebuild: false
+directories:
+  output: dist
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+  - "!**/*.map"
+extraResources:
+  - from: build/tray.png
+    to: tray.png
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+  signAndEditExecutable: true
+  verifyUpdateCodeSignature: false
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  allowElevation: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 秒薪浮窗
+  uninstallDisplayName: 秒薪浮窗
+  installerLanguages:
+    - zh_CN
+    - en_US
+  displayLanguageSelector: false
+  artifactName: WorkPrice-Setup-${version}.${ext}
+  differentialPackage: false
+publish: null
